@@ -50,7 +50,6 @@ public class ClientGUI extends JFrame {
 
     public void log(String msg) {
         SwingUtilities.invokeLater(() -> logArea.append(msg + "\n"));
-
     }
 
     public void setScore(String text) {

@@ -1,4 +1,4 @@
-package game.model;
+package game;
 
 public class CardModel {
     private final int id;

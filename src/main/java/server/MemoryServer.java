@@ -1,7 +1,7 @@
 package server;
 
 import game.GameLogic;
-import game.dto.Protocol;
+import game.Protocol;
 import java.io.*;
 import java.net.*;
 import java.util.*;

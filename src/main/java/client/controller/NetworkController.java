@@ -1,7 +1,7 @@
 package client.controller;
 
 import client.view.ClientGUI;
-import game.dto.Protocol;
+import game.Protocol;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;

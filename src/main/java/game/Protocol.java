@@ -1,4 +1,4 @@
-package game.dto;
+package game;
 
 public enum Protocol {
     TURN, NEXT_LEVEL,

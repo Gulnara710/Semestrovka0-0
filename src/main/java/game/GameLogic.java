@@ -1,7 +1,5 @@
 package game;
 
-import game.model.CardModel;
-import game.dto.Protocol;
 import java.util.*;
 
 public class GameLogic {
