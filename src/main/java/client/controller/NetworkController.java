@@ -52,12 +52,10 @@ public class NetworkController implements Runnable {
 
         String commandStr = p[0];
 
-        // Пытаемся сопоставить строку с Enum. Если пришла левая строка (например, LOG), обработаем через else.
         Protocol command = null;
         try {
             command = Protocol.valueOf(commandStr);
         } catch (IllegalArgumentException e) {
-            // Если это не команда из Protocol, проверим наши спец-сообщения
             if (commandStr.equals("LOG")) {
                 gui.log(p[1]);
             }
@@ -66,11 +64,9 @@ public class NetworkController implements Runnable {
 
         switch (command) {
             case INIT:
-                // Очищаем поле перед созданием нового, чтобы не было "лишних" карт
                 gui.getGamePanel().initBoard(new ArrayList<>());
 
                 List<Integer> ids = new ArrayList<>();
-                // p[1] - это уровень, p[2...N] - ID карт
                 for (int i = 2; i < p.length; i++) {
                     ids.add(Integer.parseInt(p[i]));
                 }
@@ -92,7 +88,6 @@ public class NetworkController implements Runnable {
                 break;
 
             case NO_MATCH:
-                // Сервер сказал: карты не совпали, закрываем через анимацию
                 int n1 = Integer.parseInt(p[1]);
                 int n2 = Integer.parseInt(p[2]);
                 gui.getGamePanel().animateClose(n1, n2);

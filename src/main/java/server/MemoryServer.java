@@ -7,7 +7,7 @@ import java.net.*;
 import java.util.*;
 
 public class MemoryServer {
-    private static List<ClientHandler> clients = new ArrayList<>();
+    public static List<ClientHandler> clients = new ArrayList<>();
     private static GameLogic sharedGame = new GameLogic();
 
     public static void main(String[] args) {
@@ -17,14 +17,12 @@ public class MemoryServer {
 
             while (clients.size() < 2) {
                 Socket socket = serverSocket.accept();
-                // Присваиваем айди (0 или 1) по порядку подключения
                 ClientHandler handler = new ClientHandler(socket, clients.size());
                 clients.add(handler);
                 new Thread(handler).start();
                 System.out.println("Игрок " + clients.size() + " подключен");
             }
 
-            // Когда оба на месте - стартуем
             broadcast(sharedGame.getInitMsg());
             broadcast(sharedGame.getScoreMsg());
             broadcast("LOG|Игра началась! Сейчас ход Игрока 1");
