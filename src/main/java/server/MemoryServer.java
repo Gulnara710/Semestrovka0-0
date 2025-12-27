@@ -59,12 +59,13 @@ public class MemoryServer {
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 out = new PrintWriter(socket.getOutputStream(), true);
 
+                sendMessage("PLAYER|" + (playerID + 1));
+
                 String line;
                 while ((line = in.readLine()) != null) {
                     String[] p = line.split(Protocol.DELIMITER);
 
                     if (p[0].equals(Protocol.TURN.name())) {
-                        // ПРОВЕРКА ОЧЕРЕДНОСТИ
                         if (sharedGame.getCurrentPlayer() == this.playerID) {
                             String result = sharedGame.handleTurn(Integer.parseInt(p[1]));
                             if (!result.isEmpty()) broadcast(result);

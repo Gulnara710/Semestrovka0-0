@@ -29,7 +29,7 @@ public class NetworkController implements Runnable {
             gui.log("Подключено к серверу. Ожидание второго игрока...");
 
             // в панель игры передается действие - при клике на карту отправить ее индекс серверу
-            // сами карту НЕ открываем - ждем команду OPEN от сервера (чтобы оба игрока увидели это одновременно)
+            // сами карту не открываем - ждем команду OPEN от сервера (чтобы оба игрока увидели это одновременно)
             gui.getGamePanel().setListener(idx -> {
                 if (out != null) {
                     out.println(Protocol.TURN.name() + "|" + idx);
@@ -51,6 +51,11 @@ public class NetworkController implements Runnable {
         if (p.length == 0) return;
 
         String commandStr = p[0];
+
+        if (commandStr.equals("PLAYER")) {
+            gui.setPlayerLabel("Вы играете за игрока " + p[1]);
+            return;
+        }
 
         Protocol command = null;
         try {

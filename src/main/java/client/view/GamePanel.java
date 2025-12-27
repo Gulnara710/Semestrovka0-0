@@ -138,8 +138,8 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void clearBoard() {
-        cards.clear();
-        repaint();
-    }
+//    public void clearBoard() {
+//        cards.clear();
+//        repaint();
+//    }
 }
