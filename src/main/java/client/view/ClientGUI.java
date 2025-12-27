@@ -16,41 +16,63 @@ public class ClientGUI extends JFrame {
     public ClientGUI() {
         setTitle("Memory Game");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         setLayout(new BorderLayout());
 
-        JPanel top = new JPanel(new GridLayout(3, 1));
-
-        playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        top.add(playerLabel);
-        top.add(scoreLabel);
-
-        JPanel btns = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        btns.add(btnConnect);
-        btns.add(btnNext);
-
-        top.add(btns);
-
-
+        JPanel top = createTopPanel();
         add(top, BorderLayout.NORTH);
-        add(gamePanel, BorderLayout.CENTER);
+
+        JPanel centerContainer = createCenteredGamePanel();
+        add(centerContainer, BorderLayout.CENTER);
+
         add(new JScrollPane(logArea), BorderLayout.SOUTH);
+
         logArea.setEditable(false);
         logArea.setFocusable(false);
-
-        btnNext.setEnabled(false); // отключение кнопки после нажатия
+        btnNext.setEnabled(false);
 
         btnConnect.addActionListener(e -> {
             controller = new NetworkController("localhost", 12345, this);
             new Thread(controller).start();
             btnConnect.setEnabled(false);
         });
-
         btnNext.addActionListener(e -> controller.sendNextLevel());
 
-        setSize(450, 700);
+        setSize(450, 650);
         setVisible(true);
+    }
+
+    private JPanel createTopPanel() {
+        JPanel top = new JPanel(new GridLayout(3, 1));
+        playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        top.add(playerLabel);
+        top.add(scoreLabel);
+
+        JPanel btns = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        btns.add(btnConnect);
+        btns.add(btnNext);
+        top.add(btns);
+
+        return top;
+    }
+
+    private JPanel createCenteredGamePanel() {
+        JPanel horizontalCenter = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+        JPanel verticalCenter = new JPanel();
+        verticalCenter.setLayout(new BoxLayout(verticalCenter, BoxLayout.Y_AXIS));
+
+        verticalCenter.add(Box.createVerticalGlue());
+        verticalCenter.add(gamePanel);
+        verticalCenter.add(Box.createVerticalGlue());
+
+        horizontalCenter.add(verticalCenter);
+
+        horizontalCenter.setBackground(new Color(2, 95, 79));
+        verticalCenter.setBackground(new Color(2, 95, 79));
+
+        return horizontalCenter;
     }
 
     public GamePanel getGamePanel() {
